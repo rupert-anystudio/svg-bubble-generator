@@ -1,9 +1,10 @@
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import './BubbleGenerator.css'
 
 const CHILD_RADIUS_MIN = 40
 const CHILD_RADIUS_MAX = 65
 const CHILD_AMOUNT = 10
+const STROKE_WIDTH = 5
 
 function getChildCircles(circleEl) {
   const circleLength = circleEl.getTotalLength()
@@ -21,35 +22,108 @@ const BubbleGenerator = () => {
   const rootRef = useRef(null)
   const [childCircles, setChildCircles] = useState(null)
 
-  useEffect(() => {
+  const generateBubble = useCallback(() => {
     const newChildCircles = getChildCircles(rootRef.current)
     setChildCircles(newChildCircles)
   }, [setChildCircles])
 
+  useEffect(() => {
+    generateBubble()
+  }, [generateBubble])
+
   const handleGenerateClick = e => {
     e.preventDefault()
-    const newChildCircles = getChildCircles(rootRef.current)
-    setChildCircles(newChildCircles)
+    generateBubble()
   }
 
   return (
     <>
-      <h1>{'Svg Bubble Generator'}</h1>
-      <svg className="svgBubble" viewBox="0 0 500 500" width="500px" height="500px">
-        {/* <rect className="root" x={100} y={100} width={300} height={300} rx={20} ref={rootRef} /> */}
-        <ellipse className="root" cx={250} cy={250} rx={180} ry={80} ref={rootRef}  />
-        {/* <circle className="root" cx={250} cy={250} r={180} ref={rootRef}  /> */}
-        {childCircles && (
-          <>
-            {childCircles.map(childCircle => {
-              return (
-                <circle className="child" {...childCircle} />
-              )
-            })}
-          </>
-        )}
+      <svg
+        viewBox="0 0 500 500"
+        width="500px"
+        height="500px"
+        onClick={handleGenerateClick}
+      >
+        <g fill="blue">
+          <ellipse
+            cx={250}
+            cy={250}
+            rx={180}
+            ry={80}
+            ref={rootRef}
+          />
+          {childCircles && (
+            <>
+              {childCircles.map(({ r, ...childCircle }) => (
+                <circle {...childCircle} r={r + STROKE_WIDTH} />
+              ))}
+            </>
+          )}
+        </g>
+        <g fill="white">
+          <ellipse
+            cx={250}
+            cy={250}
+            rx={180}
+            ry={80}
+            ref={rootRef}
+          />
+          {childCircles && (
+            <>
+              {childCircles.map(childCircle => (
+                <circle {...childCircle} />
+              ))}
+            </>
+          )}
+        </g>
       </svg>
-      <button onClick={handleGenerateClick}>Generate!</button>
+    </>
+  )
+
+  return (
+    <>
+      <svg
+        viewBox="0 0 500 500"
+        width="500px"
+        height="500px"
+        onClick={handleGenerateClick}
+      >
+        <defs>
+          <clipPath id="bubbleshape">
+            <ellipse
+              cx={250}
+              cy={250}
+              rx={180}
+              ry={80}
+              ref={rootRef}
+            />
+            {childCircles && (
+              <>
+                {childCircles.map(childCircle => (
+                  <circle {...childCircle} />
+                ))}
+              </>
+            )}
+          </clipPath>
+                
+          <filter id="shadow">
+            <feGaussianBlur in="SourceAlpha" stdDeviation=""/>
+            <feOffset dx="3" dy="3"/>
+            <feMerge>
+              <feMergeNode/>
+              <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+          </filter>
+        </defs>
+        <g filter="url(#shadow)">
+          <rect
+            className="bubble"
+            width="100%"
+            height="100%"
+            clipPath="url(#bubbleshape)"
+          />
+        </g>
+      </svg>
     </>
   )
 }
