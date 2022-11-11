@@ -1,0 +1,13 @@
+.svgBubble {
+  /* background: red; */
+}
+
+.root {
+  fill: blue;
+}
+
+.child {
+  fill: blue;
+  /* stroke: blue;
+  stroke-width: 2; */
+}
