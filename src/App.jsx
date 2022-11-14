@@ -1,21 +1,10 @@
-import Bubble from './components/Bubble'
-import ResizeableAndDraggableElement from './components/ResizeableAndDraggableElement'
+import Bubble from './components/BubbleContainer'
 
 function App() {
   return (
     <div className="app">
-      <ResizeableAndDraggableElement>
-        {layout => (
-          <Bubble
-            width={layout.width}
-            height={layout.height}
-            bubbleMaxRadius={70}
-            bubbleMinRadius={40}
-            strokeWidth={15}
-            bubbleDensity={1.3}
-          />
-        )}
-      </ResizeableAndDraggableElement>
+      <Bubble />
+      <Bubble />
     </div>
   )
 }

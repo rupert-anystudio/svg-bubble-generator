@@ -4,7 +4,7 @@
   --color-border: rgb(128, 128, 128);
   --color-stage: rgb(48, 48, 48);
   --color-bubble-fill: rgb(247, 247, 247);
-  --color-bubble-border: rgb(0, 0, 0);
+  --color-bubble-border: rgb(56, 34, 255);
   --color-bubble-txt: rgb(0, 0, 0);
 }
 
@@ -34,6 +34,10 @@ svg .outer {
 
 svg .inner {
   fill: var(--color-bubble-fill);
+}
+
+svg circle, svg ellipse {
+  pointer-events: auto;
 }
 
 .content {

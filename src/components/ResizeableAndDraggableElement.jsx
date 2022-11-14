@@ -1,12 +1,20 @@
 import { useCallback, useState } from "react"
 import { Rnd } from "react-rnd"
 
-const ResizeableAndDraggableElement = ({ children }) => {
+const ResizeableAndDraggableElement = ({
+  children,
+  width = 600,
+  height = 300,
+  x = 0,
+  y = 0,
+  minWidth = 300,
+  minHeight = 300,
+}) => {
   const [layout, setLayout] = useState({
-    width: 600,
-    height: 300,
-    x: 10,
-    y: 10,
+    width,
+    height,
+    x,
+    y,
   })
 
   const handleDragStop = useCallback((e, d) => {
@@ -33,24 +41,23 @@ const ResizeableAndDraggableElement = ({ children }) => {
       ...position,
     }))
   }, [setLayout])
-  
+
   return (
     <Rnd
       style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        // background: "rgba(255,255,255,0.2)",
-        // overflow: 'hidden',
-        outline: '1px dashed rgba(255,255,255,0.2)'
+        // display: "flex",
+        // alignItems: "center",
+        // justifyContent: "center",
+        outline: '1px dashed rgba(255,255,255,0.2)',
+        // pointerEvents: 'none',
       }}
       size={{ width: layout.width, height: layout.height }}
       position={{ x: layout.x, y: layout.y }}
       onDragStop={handleDragStop}
       onResizeStop={handleResizeStop}
       onResize={handleResize}
-      minWidth={300}
-      minHeight={300}
+      minWidth={minWidth}
+      minHeight={minHeight}
     >
       {children(layout)}
     </Rnd>
