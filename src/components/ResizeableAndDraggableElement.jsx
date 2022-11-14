@@ -48,7 +48,7 @@ const ResizeableAndDraggableElement = ({ children }) => {
       position={{ x: layout.x, y: layout.y }}
       onDragStop={handleDragStop}
       onResizeStop={handleResizeStop}
-      // onResize={handleResize}
+      onResize={handleResize}
       minWidth={300}
       minHeight={300}
     >

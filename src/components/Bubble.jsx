@@ -11,7 +11,8 @@ function returnBubbles({
   const averageBubbleDiameter = ((bubbleMaxRadius + bubbleMinRadius) / 2) * 2
   const averageBubbleAmount = Math.ceil(circumference / (averageBubbleDiameter / bubbleDensity))
   const segmentLength = circumference / averageBubbleAmount
-  const distributionOffset = Math.random() * segmentLength
+  // const distributionOffset = Math.random() * segmentLength
+  const distributionOffset = 0
   return Array
     .from({length: averageBubbleAmount}, (v, i) => i)
     .map(step => {

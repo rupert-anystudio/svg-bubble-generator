@@ -9,10 +9,10 @@ function App() {
           <Bubble
             width={layout.width}
             height={layout.height}
-            bubbleMaxRadius={65}
+            bubbleMaxRadius={70}
             bubbleMinRadius={40}
             strokeWidth={15}
-            bubbleDensity={1.2}
+            bubbleDensity={1.3}
           />
         )}
       </ResizeableAndDraggableElement>
