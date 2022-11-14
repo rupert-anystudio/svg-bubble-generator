@@ -25,7 +25,7 @@ html, body {
 
 svg {
   position: relative;
-  background: var(--color-stage);
+  /* background: var(--color-stage); */
 }
 
 svg .outer {
@@ -123,6 +123,4 @@ fieldset > section > input {
 
 .bubble {
   position: relative;
-  background-color: red;
-  outline: 2px dotted var(--color-border);
 }
