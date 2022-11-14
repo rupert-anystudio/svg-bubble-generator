@@ -1,10 +1,15 @@
-import BubbleGenerator from './components/BubbleGenerator'
+import BubbleOptions from './components/BubbleOptions'
+import Bubble from './components/Bubble'
 
 function App() {
   return (
-    <>
-      <BubbleGenerator />
-    </>
+    <div className="app">
+      <BubbleOptions>
+        {options => (
+          <Bubble options={options} />
+        )}
+      </BubbleOptions>
+    </div>
   )
 }
 
