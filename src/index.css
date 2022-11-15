@@ -128,3 +128,15 @@ fieldset > section > input {
 .bubble {
   position: relative;
 }
+
+.clippedContent {
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: var(--color-bubble-txt);
+}
+
+.clippedContent > div {
+  position: relative;
+  clip-path: url(#clippath);
+}

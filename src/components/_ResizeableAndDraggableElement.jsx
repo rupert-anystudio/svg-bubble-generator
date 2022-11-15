@@ -45,11 +45,7 @@ const ResizeableAndDraggableElement = ({
   return (
     <Rnd
       style={{
-        // display: "flex",
-        // alignItems: "center",
-        // justifyContent: "center",
         outline: '1px dashed rgba(255,255,255,0.2)',
-        // pointerEvents: 'none',
       }}
       size={{ width: layout.width, height: layout.height }}
       position={{ x: layout.x, y: layout.y }}
@@ -58,6 +54,7 @@ const ResizeableAndDraggableElement = ({
       onResize={handleResize}
       minWidth={minWidth}
       minHeight={minHeight}
+      dragHandleClassName='bubble'
     >
       {children(layout)}
     </Rnd>

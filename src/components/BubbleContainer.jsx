@@ -1,43 +1,28 @@
-import Bubble from "./Bubble"
-import ResizeableAndDraggableElement from "./ResizeableAndDraggableElement"
+import { useBubbleContext } from "./BubbleContext"
 
 const BubbleContainer = ({
-  x,
-  y,
-  width,
-  height,
-  minWidth,
-  minHeight,
-  bubbleMaxRadius,
-  bubbleMinRadius,
-  strokeWidth,
-  bubbleDensity,
+  children,
 }) => {
-  const resizingProps = {
-    x,
-    y,
+  const {
     width,
     height,
-    minWidth,
-    minHeight,
-  }
-  const bubbleProps = {
+    x,
+    y,
     bubbleMaxRadius,
     bubbleMinRadius,
     strokeWidth,
     bubbleDensity,
-  }
-  return (
-    <ResizeableAndDraggableElement {...resizingProps}>
-      {layout => (
-        <Bubble
-          width={layout.width}
-          height={layout.height}
-          {...bubbleProps}
-        />
-      )}
-    </ResizeableAndDraggableElement>
-  )
+  } = useBubbleContext()
+  return children({
+    width,
+    height,
+    x,
+    y,
+    bubbleMaxRadius,
+    bubbleMinRadius,
+    strokeWidth,
+    bubbleDensity,
+  })
 }
 
 export default BubbleContainer

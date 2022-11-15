@@ -1,10 +1,9 @@
-import Bubble from './components/BubbleContainer'
+import DemoBubble from './components/DemoBubble'
 
 function App() {
   return (
     <div className="app">
-      <Bubble />
-      <Bubble />
+      <DemoBubble />
     </div>
   )
 }
