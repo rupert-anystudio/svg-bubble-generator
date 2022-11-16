@@ -97,11 +97,11 @@ const RadiusControls = () => {
         <input id="bubbleMaxRadius" type="range" min="10" max="150" value={bubbleMaxRadius} onChange={handleBubbleMaxRadiusChange} />
         <strong>{bubbleMaxRadius}</strong>
       </section>
-      <section>
+      {/* <section>
         <label htmlFor="bubbleMinRadius">Min Radius</label>
         <input id="bubbleMinRadius" type="range" min="10" max="150" value={bubbleMinRadius} onChange={handleBubbleMinRadiusChange} readOnly />
         <strong>{bubbleMinRadius}</strong>
-      </section>
+      </section> */}
       <section>
         <label htmlFor="radiusOffset">Radius Variance</label>
         <input id="radiusOffset" type="range" min="0" max="200" value={radiusOffset} onChange={handleRadiusOffsetChange} />
@@ -136,9 +136,6 @@ const DemoBubble = ({
   }, [dispatch])
 
   const rndProps = {
-    style: {
-      outline: '1px dashed rgba(255,255,255,0.2)',
-    },
     size: { width, height },
     position: { x, y },
     onDragStop: handleDragStop,
@@ -168,7 +165,7 @@ const DemoBubble = ({
           position: 'absolute',
           bottom: '100%',
           left: 0,
-          marginBottom: 20,
+          paddingBottom: 20,
           right: 0,
         }}>
           <LayoutControls />

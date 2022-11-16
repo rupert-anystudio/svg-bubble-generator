@@ -56,6 +56,11 @@ svg circle, svg ellipse {
   color: var(--color-bubble-txt);
 }
 
+.row {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(0px, auto));
+}
+
 fieldset {
   /* width: clamp(100px, 100vw, 420px); */
   display: grid;
@@ -65,9 +70,14 @@ fieldset {
   border-color: var(--color-border);
   border-style: solid;
   border-width: 0;
-  background-color: var(--color-stage);
+  background-color: none;
   padding: 10px;
   margin: 0;
+  align-content: start;
+}
+
+fieldset button {
+  pointer-events: auto;
 }
 
 fieldset > section {
@@ -76,6 +86,7 @@ fieldset > section {
   grid-template-areas:
     "label value"
     "input input";
+  align-content: start;
 }
 
 fieldset > section:not(:first-child) {
@@ -89,40 +100,53 @@ fieldset > section:not(:last-child) {
 
 fieldset > section > label {
   grid-area: label;
+  pointer-events: auto;
 }
 
 fieldset > section > strong {
   grid-area: value;
 }
 
-fieldset > section > input {
+fieldset > section > input, fieldset > section > button {
   grid-area: input;
+  pointer-events: auto;
 }
 
-.app {
+.react-draggable fieldset {
+  visibility: hidden;
+}
+.react-draggable:hover {
+  outline: 1px dashed rgba(255,255,255,0.2)
+}
+.react-draggable:hover fieldset {
+  visibility: visible;
+}
+
+.app, #root {
   position: relative;
-  display: grid;
-  grid-template-columns: 300px 1fr;
-  grid-gap: 20px;
-  padding: 20px;
   width: 100%;
   min-height: 100vh;
-}
-
-.stage {
-  position: relative;
   background-color: var(--color-stage);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: scroll;
 }
 
 .controls {
   position: relative;
-  display: grid;
-  grid-gap: 10px;
-  grid-auto-rows: min-content;
+  width: 100%;
+  position: sticky;
+  padding: 20px;
+  top: 0;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.stage {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
 }
 
 .bubble {

@@ -8,7 +8,7 @@ const initialContext = {
   bubbleDensity: 1.3,
   x: 40,
   y: 260,
-  width: 800,
+  width: 1040,
   height: 600,
   minWidth: 420,
   minHeight: 300,
