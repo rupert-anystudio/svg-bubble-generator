@@ -1,0 +1,166 @@
+:root {
+  --color-bg: rgb(20, 20, 20);
+  --color-txt: rgb(255, 255, 255);
+  --color-border: rgb(128, 128, 128);
+  --color-stage: rgb(48, 48, 48);
+  --color-bubble-fill: rgb(247, 247, 247);
+  --color-bubble-border: rgb(56, 34, 255);
+  --color-bubble-txt: rgb(0, 0, 0);
+}
+
+*, ::before, ::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  position: relative;
+  background: var(--color-bg);
+  color: var(--color-txt);
+  font-family: 'Roboto';
+  font-weight: 300;
+  font-size: 18px;
+  margin: 0;
+  padding: 0;
+}
+
+svg {
+  position: relative;
+  /* background: var(--color-stage); */
+}
+
+svg .outer {
+  fill: var(--color-bubble-border);
+}
+
+svg .inner {
+  fill: var(--color-bubble-fill);
+}
+
+svg circle, svg ellipse {
+  pointer-events: auto;
+}
+
+.content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.content p {
+  margin: 0;
+  font-family: sans-serif;
+  height: 100%;
+  color: var(--color-bubble-txt);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(0px, auto));
+}
+
+fieldset {
+  /* width: clamp(100px, 100vw, 420px); */
+  display: grid;
+  grid-template-columns: 1fr;
+  margin: 20px;
+  border: unset;
+  border-color: var(--color-border);
+  border-style: solid;
+  border-width: 0;
+  background-color: none;
+  padding: 10px;
+  margin: 0;
+  align-content: start;
+}
+
+fieldset button {
+  pointer-events: auto;
+}
+
+fieldset > section {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-areas:
+    "label value"
+    "input input";
+  align-content: start;
+}
+
+fieldset > section:not(:first-child) {
+  border-top: 1px solid var(--color-border);
+  padding-top: 10px;
+}
+
+fieldset > section:not(:last-child) {
+  padding-bottom: 10px;
+}
+
+fieldset > section > label {
+  grid-area: label;
+  pointer-events: auto;
+}
+
+fieldset > section > strong {
+  grid-area: value;
+}
+
+fieldset > section > input, fieldset > section > button {
+  grid-area: input;
+  pointer-events: auto;
+}
+
+.react-draggable fieldset {
+  visibility: hidden;
+}
+.react-draggable:hover {
+  outline: 1px dashed rgba(255,255,255,0.2)
+}
+.react-draggable:hover fieldset {
+  visibility: visible;
+}
+
+.app, #root {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  background-color: var(--color-stage);
+}
+
+.controls {
+  position: relative;
+  width: 100%;
+  position: sticky;
+  padding: 20px;
+  top: 0;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.stage {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.bubble {
+  position: relative;
+}
+
+.clippedContent {
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: var(--color-bubble-txt);
+}
+
+.clippedContent > div {
+  position: relative;
+  clip-path: url(#clippath);
+}
