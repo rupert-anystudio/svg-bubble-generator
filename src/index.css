@@ -32,9 +32,23 @@ svg .outer {
   fill: var(--color-bubble-border);
 }
 
+svg .outer path {
+  stroke: var(--color-bubble-border);
+}
+
 svg .inner {
   fill: var(--color-bubble-fill);
 }
+
+svg .dev {
+  fill: none;
+  stroke: red;
+}
+
+/* svg .inner path {
+  fill: none;
+  stroke: red;
+} */
 
 svg circle, svg ellipse {
   pointer-events: auto;

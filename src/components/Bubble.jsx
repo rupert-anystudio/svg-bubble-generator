@@ -55,15 +55,61 @@ const Bubble = ({
     bubbleDensity,
   ])
 
+  const getCircumferenceLength = useCallback(({ circumference, at }) => {
+    if (at > circumference) return at % circumference
+    if (at < 0) return circumference + (at % circumference)
+    return at
+  }, [])
+
+  const getPointInBetween = useCallback((a, b) => {
+    return {
+      x: (a.x + b.x) / 2,
+      y: (a.y + b.y) / 2,
+    }
+  }, [])
+
+  const returnArrow = useCallback(() => {
+    if (!rootRef.current) return null
+    const circumference = rootRef.current.getTotalLength()
+    const connectsAt = circumference * 0.6
+    const arrowWidth = 150
+    const handleOffset = 30
+    const c = { x: strokeWidth, y: strokeWidth }
+    const a = rootRef.current.getPointAtLength(getCircumferenceLength({ circumference, at: connectsAt + arrowWidth }))
+    const a1 = rootRef.current.getPointAtLength(getCircumferenceLength({ circumference, at: connectsAt + arrowWidth - handleOffset }))
+    const b = rootRef.current.getPointAtLength(getCircumferenceLength({ circumference, at: connectsAt - arrowWidth }))
+    const b1 = rootRef.current.getPointAtLength(getCircumferenceLength({ circumference, at: connectsAt - arrowWidth + handleOffset }))
+    const ca = getPointInBetween(c, a1)
+    const cb = getPointInBetween(c, b1)
+    return {
+      d: `
+        M ${a.x},${a.y}
+        C ${a1.x},${a1.y}
+          ${ca.x},${ca.y}
+          ${c.x},${c.y}
+        C ${cb.x},${cb.y}
+          ${b1.x},${b1.y}
+          ${b.x},${b.y}
+        Z
+      `
+    }
+  }, [
+    width,
+    height,
+    strokeWidth
+  ])
+
   const returnLayout = useCallback(() => ({
     strokeWidth,
     bubbles: returnBubbles(),
     root: returnRoot(),
     svg: returnSvg(),
+    arrow: returnArrow(),
   }), [
     returnBubbles,
     returnRoot,
     returnSvg,
+    returnArrow,
     strokeWidth,
   ])
 
@@ -126,6 +172,13 @@ const Bubble = ({
             {(layout?.bubbles || []).map(bubble => (
               <circle {...bubble} r={bubble.r + layout.strokeWidth} />
             ))}
+            {layout?.arrow && (
+              <path
+                {...layout.arrow}
+                strokeWidth={strokeWidth * 2}
+                strokeLinejoin='round'
+              />
+            )}
           </g>
         )}
         <g className="inner">
@@ -137,6 +190,11 @@ const Bubble = ({
           {(layout?.bubbles || []).map(bubble => (
             <circle {...bubble} />
           ))}
+          {layout?.arrow && (
+            <path
+              {...layout.arrow}
+            />
+          )}
         </g>
         {/* <polygon points="400,50 400,320, 140,300" /> */}
         {/* <g mask="url(#mask-inner)">
@@ -144,12 +202,30 @@ const Bubble = ({
             {'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.'}
           </text>
         </g> */}
-        {/* {layout?.root && (
-          <ellipse
-            {...layout.root}
-            style={{ fill: 'none', stroke: 'red' }}
-          />
-        )} */}
+        <g className="dev">
+          {layout?.root && (
+            <>
+              <ellipse
+                {...layout.root}
+              />
+              <ellipse
+                {...layout.root}
+                rx={layout.root.rx + bubbleMaxRadius}
+                ry={layout.root.ry + bubbleMaxRadius}
+              />
+              <ellipse
+                {...layout.root}
+                rx={layout.root.rx + bubbleMinRadius}
+                ry={layout.root.ry + bubbleMinRadius}
+              />
+            </>
+          )}
+          {layout?.arrow && (
+            <path
+              {...layout.arrow}
+            />
+          )}
+        </g>
       </svg>
       {/* <div className='clippedContent'>
         <div>
