@@ -3,7 +3,7 @@ import { createContext, useContext, useReducer } from "react"
 const initialContext = {
   minSegmentsLength: 120,
   maxVariation: 80,
-  showHelpers: false,
+  showHelpers: true,
   isConcave: false,
   dampener: 10,
 }

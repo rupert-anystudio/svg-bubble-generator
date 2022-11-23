@@ -1,4 +1,4 @@
-import ArcBubble from "./ArcBubble"
+import ArcBubble from "./ArcBubbleNew"
 import { ArcBubbleContextProvider, useArcBubbleContext } from "./ArcBubbleContext"
 import DraggableAndResizeable from "./DraggableAndResizeable"
 
@@ -52,10 +52,15 @@ const Controls = () => {
           <input id="dampener" type="range" min="0" max="1000" value={dampener} onChange={handleIntValueChange('dampener')} />
           <strong>{dampener}</strong>
         </section>
-        <section>
+        {/* <section>
           <label htmlFor="isConcave">isConcave</label>
           <input id="isConcave" type="checkbox" checked={isConcave} onChange={handleBoolValueChange('isConcave')} />
           <strong>{isConcave}</strong>
+        </section> */}
+        <section>
+          <label htmlFor="showHelpers">showHelpers</label>
+          <input id="showHelpers" type="checkbox" checked={showHelpers} onChange={handleBoolValueChange('showHelpers')} />
+          <strong>{showHelpers}</strong>
         </section>
       </fieldset>
     </div>

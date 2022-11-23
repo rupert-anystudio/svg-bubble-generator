@@ -53,8 +53,10 @@ const returnRootProps = ({ minSegmentsLength, maxVariation, width, height, isCon
     const maxRadius = (minSegmentsLength + maxVariation) / 2
     props = {
       ...props,
-      rx: props.rx - maxRadius,
-      ry: props.ry - maxRadius,
+      cx: (width + minSegmentsLength + maxVariation) / 2,
+      cy: (height + minSegmentsLength + maxVariation) / 2,
+      rx: ((width + minSegmentsLength + maxVariation) / 2) - maxRadius,
+      ry: ((height + minSegmentsLength + maxVariation) / 2) - maxRadius,
     }
   }
   return props
@@ -160,12 +162,11 @@ const ArcBubble = ({
     setPoints(returnPoints())
   }, [returnPoints])
 
-  const [pathProps, setPathProps] = useState(null)
+  const [pathProps, setPathProps] = useState({})
 
   useEffect(() => {
     setPathProps({
       d: returnPathFromPoints(points, { dampener, isConcave }),
-      style
     })
   }, [points, dampener, isConcave, style])
 
@@ -206,17 +207,21 @@ const ArcBubble = ({
         ref={svgRef}
         xmlns="http://www.w3.org/2000/svg"
         xmlnsXlink="http://www.w3.org/1999/xlink"
-        viewBox={`0 0 ${width} ${height}`}
-        // viewBox={viewBox}
-        width={width}
-        height={height}
+        viewBox={`0 0 ${width + minSegmentsLength + maxVariation} ${height + minSegmentsLength + maxVariation}`}
+        width={width + minSegmentsLength + maxVariation}
+        height={height + minSegmentsLength + maxVariation}
+        style={{
+          marginLeft: (minSegmentsLength + maxVariation) * -0.5,
+          marginTop: (minSegmentsLength + maxVariation) * -0.5,
+          pointerEvents: 'none'
+        }}
       >
         <ellipse
           ref={rootRef}
           {...rootProps}
         />
         <g>
-          <path ref={pathRef} {...pathProps} />
+          <path ref={pathRef} {...pathProps} className="bubblePath" />
         </g>
         {showHelpers && (
           <g className="dev">
@@ -236,11 +241,6 @@ const ArcBubble = ({
             })}
             <ellipse
               {...rootProps}
-            />
-            <ellipse
-              {...rootProps}
-              rx={rootProps.rx + ((minSegmentsLength + maxVariation) / 2)}
-              ry={rootProps.ry + ((minSegmentsLength + maxVariation) / 2)}
             />
           </g>
         )}
