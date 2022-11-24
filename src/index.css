@@ -1,8 +1,12 @@
 :root {
-  --color-bg: rgb(20, 20, 20);
-  --color-txt: rgb(255, 255, 255);
+  --color-bg: rgb(21, 22, 24);
+  --color-txt: rgb(0, 0, 0);
+  --color-helper: rgb(70, 172, 2);
+  --color-helper: rgb(70, 172, 2);
+  --color-helper-line: rgb(0, 185, 218);
+  --color-helper-area: rgb(230, 0, 0);
+  --color-helper-vertex: rgb(174, 0, 218);
   --color-border: rgb(128, 128, 128);
-  --color-stage: rgb(48, 48, 48);
   --color-bubble-fill: rgb(247, 247, 247);
   --color-bubble-border: rgb(56, 34, 255);
   --color-bubble-txt: rgb(0, 0, 0);
@@ -23,9 +27,9 @@ html, body {
   padding: 0;
 }
 
-svg {
+/* svg {
   position: relative;
-  /* background: var(--color-stage); */
+  /* background: var(--color-stage);
 }
 
 svg .outer {
@@ -49,11 +53,6 @@ svg .bubblePath {
   fill: var(--color-bubble-fill);
 }
 
-/* svg .inner path {
-  fill: none;
-  stroke: red;
-} */
-
 svg circle, svg ellipse {
   pointer-events: auto;
 }
@@ -73,6 +72,8 @@ svg circle, svg ellipse {
   height: 100%;
   color: var(--color-bubble-txt);
 }
+
+*/
 
 .row {
   display: grid;
@@ -144,10 +145,10 @@ fieldset > section > input, fieldset > section > button {
   position: relative;
   width: 100%;
   min-height: 100vh;
-  background-color: var(--color-stage);
+  background-color: var(--color-bg);
 }
 
-.controls {
+/* .controls {
   position: relative;
   width: 100%;
   position: sticky;
@@ -155,20 +156,6 @@ fieldset > section > input, fieldset > section > button {
   top: 0;
   z-index: 10;
   pointer-events: none;
-}
-
-.stage {
-  position: relative;
-  width: 100%;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-}
-
-.bubble {
-  position: relative;
 }
 
 .clippedContent {
@@ -181,4 +168,78 @@ fieldset > section > input, fieldset > section > button {
 .clippedContent > div {
   position: relative;
   clip-path: url(#clippath);
+} */
+
+.stage {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+
+.bubble {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 2.8vw;
+}
+
+.bubble svg {
+  pointer-events: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate3d(-50%, -50%, 0);
+}
+
+.bubble .children {
+  position: relative;
+  background: none;
+  color: var(--color-bubble-txt);
+}
+
+.bubble .shape {
+  fill: var(--color-bubble-fill);
+  stroke: none;
+}
+
+.bubble .helpers {
+  fill: none;
+  stroke: var(--color-helper);
+  stroke-width: 1;
+  stroke-dasharray: 0;
+}
+
+.bubble .helpers .line {
+  stroke: var(--color-helper-line);
+}
+
+.bubble .helpers .outline {
+  stroke-width: 4;
+  stroke: var(--color-helper-outline);
+}
+
+.bubble .helpers .radius {
+  stroke-dasharray: 4;
+  stroke: var(--color-helper-area);
+}
+
+.bubble .helpers .dot {
+  fill:var(--color-helper-vertex);
+  stroke-width: 0;
+}
+
+.bubble .helpers .vertex {
+  fill: var(--color-helper-vertex);
+  stroke-width: 0;
+}
+
+.bubble .helpers .area {
+  stroke: var(--color-helper-area);
 }

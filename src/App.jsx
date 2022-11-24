@@ -12,48 +12,9 @@ function App() {
         </div>
         <div className="stage">
           {/* <DemoBubble /> */}
-          <ArcBubbleInteractive
-            width={550}
-            height={380}
-            x={20}
-            y={20}
-            maxVariation={120}
-            minSegmentsLength={80}
-            dampener={20}
-            style={{
-              fill: 'white',
-              stroke: 'none',
-              // strokeWidth: 3,
-            }}
-          />
-          {/* <ArcBubbleInteractive
-            width={550}
-            height={380}
-            x={20}
-            y={400}
-            maxVariation={120}
-            minSegmentsLength={40}
-            dampener={2}
-            style={{
-              fill: 'black',
-              stroke: 'white',
-              strokeWidth: 6,
-            }}
-          />
-          <ArcBubbleInteractive
-            width={550}
-            height={380}
-            x={600}
-            y={20}
-            isConcave
-            maxVariation={80}
-            minSegmentsLength={40}
-            dampener={6}
-            style={{
-              fill: 'orange',
-              stroke: 'none',
-            }}
-          /> */}
+          <ArcBubbleInteractive>
+            {'Memoizing the children tells React that it only needs to re-render them when deferredQuery changes and not when query changes. This caveat is not unique to useDeferredValue, and its the same pattern you would use with similar hooks that use debouncing or throttling.'}
+          </ArcBubbleInteractive>
         </div>
       </div>
     </AppContextProvider>

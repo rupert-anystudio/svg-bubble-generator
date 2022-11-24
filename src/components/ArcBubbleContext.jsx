@@ -1,11 +1,16 @@
 import { createContext, useContext, useReducer } from "react"
 
 const initialContext = {
-  minSegmentsLength: 120,
-  maxVariation: 80,
-  showHelpers: true,
+  minSegmentsLength: 80,
+  maxVariation: 40,
+  showHelpers: false,
   isConcave: false,
   dampener: 10,
+  randomShift: 15,
+  offset: -25,
+  padding: 70,
+  seed: 0,
+  fontSize: 7,
 }
 
 const ArcBubbleContext = createContext()
@@ -27,24 +32,21 @@ function bubbleReducer(state, action) {
     if (action.key === 'showHelpers') {
       return { ...state, showHelpers: action.value }
     }
-    // if (action.key === 'bubbleMinRadius') {
-    //   const bubbleMinRadius = action.value ?? state.bubbleMinRadius
-    //   const bubbleMaxRadius = state.bubbleMaxRadius < bubbleMinRadius ? bubbleMinRadius : state.bubbleMaxRadius
-    //   const radiusOffset = bubbleMaxRadius - bubbleMinRadius
-    //   return { ...state, bubbleMinRadius, bubbleMaxRadius, radiusOffset }
-    // }
-    // if (action.key === 'radiusOffset') {
-    //   const radiusOffset = action.value ?? state.radiusOffset
-    //   const bubbleMinRadius = state.bubbleMaxRadius - radiusOffset
-    //   if (bubbleMinRadius < 0) return state
-    //   return { ...state, bubbleMinRadius, radiusOffset }
-    // }
-    // if (action.key === 'strokeWidth') {
-    //   return { ...state, strokeWidth: action.value ?? state.strokeWidth }
-    // }
-    // if (action.key === 'bubbleDensity') {
-    //   return { ...state, bubbleDensity: action.value ?? state.bubbleDensity }
-    // }
+    if (action.key === 'randomShift') {
+      return { ...state, randomShift: action.value }
+    }
+    if (action.key === 'offset') {
+      return { ...state, offset: action.value }
+    }
+    if (action.key === 'padding') {
+      return { ...state, padding: action.value }
+    }
+    if (action.key === 'seed') {
+      return { ...state, seed: action.value }
+    }
+    if (action.key === 'fontSize') {
+      return { ...state, fontSize: action.value }
+    }
     return state
   }
   return state

@@ -56,10 +56,10 @@ const DraggableAndResizeable = ({
   children,
   minWidth,
   minHeight,
-  x = 40,
-  y = 260,
-  width = 1040,
-  height = 600,
+  x = 200,
+  y = 300,
+  width = 700,
+  height = 420,
   dragHandleClassName,
 }) => {
   const [layout, dispatch] = useReducer(layoutReducer, {

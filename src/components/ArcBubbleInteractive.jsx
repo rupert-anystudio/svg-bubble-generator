@@ -8,13 +8,21 @@ const Controls = () => {
     minSegmentsLength,
     maxVariation,
     showHelpers,
-    isConcave,
-    dampener,
     dispatch,
+    randomShift,
+    padding,
+    offset,
+    seed,
+    fontSize,
   } = context
 
   const handleIntValueChange = key => e => {
     const value = parseInt(e.target.value)
+    dispatch({ type: 'VALUE_CHANGE', key, value })
+  }
+
+  const handleFloatValueChange = key => e => {
+    const value = parseFloat(e.target.value)
     dispatch({ type: 'VALUE_CHANGE', key, value })
   }
 
@@ -38,25 +46,42 @@ const Controls = () => {
     >
       <fieldset>
         <section>
+          <label htmlFor="seed">seed</label>
+          <input id="seed" type="range" min="0" max="5" value={seed} onChange={handleIntValueChange('seed')} />
+          <strong>{seed}</strong>
+        </section>
+        <section>
+          <label htmlFor="randomShift">randomShift</label>
+          <input id="randomShift" type="range" min="0" max="100" value={randomShift} onChange={handleIntValueChange('randomShift')} />
+          <strong>{randomShift}</strong>
+        </section>
+        <section>
+          <label htmlFor="offset">offset</label>
+          <input id="offset" type="range" min="-200" max="200" value={offset} onChange={handleIntValueChange('offset')} />
+          <strong>{offset}</strong>
+        </section>
+        <section>
+          <label htmlFor="padding">padding</label>
+          <input id="padding" type="range" min="0" max="200" value={padding} onChange={handleIntValueChange('padding')} />
+          <strong>{padding}</strong>
+        </section>
+      </fieldset>
+      <fieldset>
+        <section>
+          <label htmlFor="fontSize">fontSize</label>
+          <input id="fontSize" type="range" min="1" max="20" step={0.01} value={fontSize} onChange={handleFloatValueChange('fontSize')} />
+          <strong>{fontSize}</strong>
+        </section>
+        <section>
           <label htmlFor="minSegmentsLength">minSegmentsLength</label>
-          <input id="minSegmentsLength" type="range" min="10" max="200" value={minSegmentsLength} onChange={handleIntValueChange('minSegmentsLength')} />
+          <input id="minSegmentsLength" type="range" min="20" max="300" step={0.01} value={minSegmentsLength} onChange={handleFloatValueChange('minSegmentsLength')} />
           <strong>{minSegmentsLength}</strong>
         </section>
         <section>
           <label htmlFor="maxVariation">maxVariation</label>
-          <input id="maxVariation" type="range" min="0" max="800" value={maxVariation} onChange={handleIntValueChange('maxVariation')} />
+          <input id="maxVariation" type="range" min="0" max="150" value={maxVariation} step={0.01} onChange={handleFloatValueChange('maxVariation')} />
           <strong>{maxVariation}</strong>
         </section>
-        <section>
-          <label htmlFor="dampener">dampener</label>
-          <input id="dampener" type="range" min="0" max="1000" value={dampener} onChange={handleIntValueChange('dampener')} />
-          <strong>{dampener}</strong>
-        </section>
-        {/* <section>
-          <label htmlFor="isConcave">isConcave</label>
-          <input id="isConcave" type="checkbox" checked={isConcave} onChange={handleBoolValueChange('isConcave')} />
-          <strong>{isConcave}</strong>
-        </section> */}
         <section>
           <label htmlFor="showHelpers">showHelpers</label>
           <input id="showHelpers" type="checkbox" checked={showHelpers} onChange={handleBoolValueChange('showHelpers')} />
@@ -67,23 +92,33 @@ const Controls = () => {
   )
 }
 
-const ArcBubbleContainer = props => {
+const ArcBubbleContainer = (props) => {
   const {
     minSegmentsLength,
     maxVariation,
     showHelpers,
     isConcave,
     dampener,
+    randomShift,
+    offset,
+    padding,
+    seed,
+    fontSize,
   } = useArcBubbleContext()
   return (
     <ArcBubble
-      {...props}
       {...{
+        ...props,
         minSegmentsLength,
         maxVariation,
         showHelpers,
         isConcave,
         dampener,
+        randomShift,
+        offset,
+        padding,
+        seed,
+        fontSize,
       }}
     />
   )
@@ -101,6 +136,7 @@ const ArcBubbleInteractive = ({
   showHelpers,
   isConcave,
   dampener,
+  children,
 }) => {
   return (
     <ArcBubbleContextProvider
@@ -125,8 +161,10 @@ const ArcBubbleInteractive = ({
       >
         {layout => (
           <>
+            <ArcBubbleContainer {...layout}>
+              {children}
+            </ArcBubbleContainer>
             <Controls />
-            <ArcBubbleContainer {...layout} />
           </>
         )}
       </DraggableAndResizeable>
