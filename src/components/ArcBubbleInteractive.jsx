@@ -3,47 +3,25 @@ import { ArcBubbleContextProvider, useArcBubbleContext } from "./ArcBubbleContex
 import DraggableAndResizeable from "./DraggableAndResizeable"
 
 const Controls = () => {
-  const context = useArcBubbleContext()
+  const {
+    state,
+    handleIntValueChange,
+    handleFloatValueChange,
+    handleBoolValueChange
+   } = useArcBubbleContext()
   const {
     minSegmentsLength,
     maxVariation,
     showHelpers,
-    dispatch,
     randomShift,
     padding,
     offset,
     seed,
     fontSize,
-  } = context
-
-  const handleIntValueChange = key => e => {
-    const value = parseInt(e.target.value)
-    dispatch({ type: 'VALUE_CHANGE', key, value })
-  }
-
-  const handleFloatValueChange = key => e => {
-    const value = parseFloat(e.target.value)
-    dispatch({ type: 'VALUE_CHANGE', key, value })
-  }
-
-  const handleBoolValueChange = key => e => {
-    const value = e.target.checked
-    dispatch({ type: 'VALUE_CHANGE', key, value })
-  }
+  } = state
 
   return (
-    <div
-      style={{
-        display: 'grid',
-        gridTemplateColumns: '280px 280px 280px',
-        gridGap: 0,
-        position: 'absolute',
-        bottom: '100%',
-        left: 0,
-        paddingBottom: 20,
-        right: 0,
-      }}
-    >
+    <div className="controls">
       <fieldset>
         <section>
           <label htmlFor="seed">seed</label>
@@ -93,34 +71,9 @@ const Controls = () => {
 }
 
 const ArcBubbleContainer = (props) => {
-  const {
-    minSegmentsLength,
-    maxVariation,
-    showHelpers,
-    isConcave,
-    dampener,
-    randomShift,
-    offset,
-    padding,
-    seed,
-    fontSize,
-  } = useArcBubbleContext()
+  const { state } = useArcBubbleContext()
   return (
-    <ArcBubble
-      {...{
-        ...props,
-        minSegmentsLength,
-        maxVariation,
-        showHelpers,
-        isConcave,
-        dampener,
-        randomShift,
-        offset,
-        padding,
-        seed,
-        fontSize,
-      }}
-    />
+    <ArcBubble {...props} {...state} />
   )
 }
 
@@ -131,23 +84,10 @@ const ArcBubbleInteractive = ({
   height,
   minWidth,
   minHeight,
-  minSegmentsLength,
-  maxVariation,
-  showHelpers,
-  isConcave,
-  dampener,
   children,
 }) => {
   return (
-    <ArcBubbleContextProvider
-      initialValue={{
-        minSegmentsLength,
-        maxVariation,
-        showHelpers,
-        isConcave,
-        dampener,
-      }}
-    >
+    <ArcBubbleContextProvider>
       <DraggableAndResizeable
         {...{
           x,

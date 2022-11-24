@@ -5,13 +5,7 @@ function App() {
   return (
     <AppContextProvider>
       <div className="app">
-        <div className="controls">
-        {/* <div className="row">
-          <AppControls />
-        </div>   */}
-        </div>
         <div className="stage">
-          {/* <DemoBubble /> */}
           <ArcBubbleInteractive>
             {'Memoizing the children tells React that it only needs to re-render them when deferredQuery changes and not when query changes. This caveat is not unique to useDeferredValue, and its the same pattern you would use with similar hooks that use debouncing or throttling.'}
           </ArcBubbleInteractive>

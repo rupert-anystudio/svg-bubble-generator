@@ -1,6 +1,6 @@
 import { createContext, useContext, useReducer } from "react"
 
-const initialContext = {
+const initialState = {
   minSegmentsLength: 80,
   maxVariation: 40,
   showHelpers: false,
@@ -17,35 +17,8 @@ const ArcBubbleContext = createContext()
 
 function bubbleReducer(state, action) {
   if (action.type === 'VALUE_CHANGE') {
-    if (action.key === 'minSegmentsLength') {
-      return { ...state, minSegmentsLength: action.value }
-    }
-    if (action.key === 'maxVariation') {
-      return { ...state, maxVariation: action.value }
-    }
-    if (action.key === 'dampener') {
-      return { ...state, dampener: action.value }
-    }
-    if (action.key === 'isConcave') {
-      return { ...state, isConcave: action.value }
-    }
-    if (action.key === 'showHelpers') {
-      return { ...state, showHelpers: action.value }
-    }
-    if (action.key === 'randomShift') {
-      return { ...state, randomShift: action.value }
-    }
-    if (action.key === 'offset') {
-      return { ...state, offset: action.value }
-    }
-    if (action.key === 'padding') {
-      return { ...state, padding: action.value }
-    }
-    if (action.key === 'seed') {
-      return { ...state, seed: action.value }
-    }
-    if (action.key === 'fontSize') {
-      return { ...state, fontSize: action.value }
+    if (state[action.key] !== undefined) {
+      return { ...state, [action.key]: action.value }
     }
     return state
   }
@@ -53,13 +26,30 @@ function bubbleReducer(state, action) {
 }
 
 export const ArcBubbleContextProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(bubbleReducer, initialContext)
+  const [state, dispatch] = useReducer(bubbleReducer, initialState)
+
+  const handleIntValueChange = key => e => {
+    const value = parseInt(e.target.value)
+    dispatch({ type: 'VALUE_CHANGE', key, value })
+  }
+
+  const handleFloatValueChange = key => e => {
+    const value = parseFloat(e.target.value)
+    dispatch({ type: 'VALUE_CHANGE', key, value })
+  }
+
+  const handleBoolValueChange = key => e => {
+    const value = e.target.checked
+    dispatch({ type: 'VALUE_CHANGE', key, value })
+  }
 
   return (
     <ArcBubbleContext.Provider
       value={{
-        ...state,
-        dispatch,
+        state,
+        handleIntValueChange,
+        handleFloatValueChange,
+        handleBoolValueChange,
       }}
     >
       {children}
